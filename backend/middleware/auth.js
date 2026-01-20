@@ -51,6 +51,8 @@ exports.isStudent = async(req,res,next) => {
             });
         }
 
+        next(); 
+
         
     } catch (error) {
         return res.status(500).json({
@@ -62,18 +64,38 @@ exports.isStudent = async(req,res,next) => {
 
 
 
-exports.isStudent = async(req,res,next) => {
+exports.isAdmin = async(req,res,next) => {
     try {
         
         if(req.user.accountType !== "Admin"){
             return res.status(401).json({
                 success:false,
-                message : "This is proected route for Student"
+                message : "This is proected route for Admin"
             });
         }
-
-        NodeList()
+        next();
         
+        
+    } catch (error) {
+        return res.status(500).json({
+            success:false,
+            message : "User Role cannot be verified"
+        });
+    }
+}
+
+
+
+exports.isInstructor = async(req,res,next) => {
+    try {
+        
+        if(req.user.accountType !== "Instructor"){
+            return res.status(401).json({
+                success:false,
+                message : "This is proected route for Instructor"
+            });
+        }
+        next();
     } catch (error) {
         return res.status(500).json({
             success:false,
