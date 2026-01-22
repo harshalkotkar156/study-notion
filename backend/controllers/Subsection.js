@@ -86,7 +86,7 @@ exports.deleteSubSection = async (req,res) => {
 exports.updateSubSection = async (req,res) => {
     try {
         
-        const {subSectionId ,title,timeDuration,description} = req.body;
+        const {subSectionId ,title="",timeDuration="",description=""} = req.body;
         if(req.file.videoFile){
             const video = req.file.videoFile;
             const videoUpload = await uploadImageCloudinary(video,process.env.CLOUDINARY_FOLDER_NAME);
