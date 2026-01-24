@@ -91,7 +91,7 @@ exports.getUserDetails = async(req,res) => {
                 message : "All fields are required"
             });
         }
-
+  
         const user = await User.findById(id).populate("additionalDetails");
 
         return res.status(200).json({
