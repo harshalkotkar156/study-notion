@@ -51,3 +51,58 @@ exports.showAllCategories = async(req,res) =>{
         });
     }
 }
+
+exports.categoryPageDetails = async(req,res) => {
+    try {
+        const {categoryId } = req.body;
+
+        const selectedCategory = await Category.findById(categoryId)
+            .populate("courses").exec();
+
+        if(!selectedCategory){
+            return res.status(404).json({
+                success:false,
+                message : "Data not find"
+            });
+        }
+
+        const diffrentCategories = await Category.find({
+            _id : {$ne : categoryId},
+        }).populate("courses").exec();
+         
+    
+        const topSellingCourses = await Course.aggregate([
+            {
+                $addFields: {
+                    enrolledCount: { $size: "$studentEnrolled" }
+                }
+            },
+            {
+                $sort: { enrolledCount: -1 }
+            },
+            {
+                $limit: 10 
+            }
+        ]);
+
+        return res.status(200).json({
+            success:true,
+            message : "Date fetched successfully",
+            data: {
+                diffrentCategories,
+                selectedCategory,
+                topSellingCourses
+            }
+        });
+
+
+
+
+    } catch (error) {
+        return res.status(500).json({
+            success:false,
+            message : "Error in getting data"
+        });        
+    }    
+}
+
