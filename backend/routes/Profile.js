@@ -7,10 +7,11 @@ const {updateProfile,
     instructorDashboard,
     getEnrolledCourses} = require("../controllers/Profile");
 
+const {auth,isInstructor} = require("../middleware/auth");
 router.put('/update-profile' ,auth, updateProfile);
 router.delete('/delete-profile' ,auth, deleteAccount);
 router.get('/get-user-details' ,auth, getUserDetails);
-router.get('/instructor-dashboard' ,auth, instructorDashboard);
+router.get('/instructor-dashboard' ,auth,isInstructor, instructorDashboard);
 router.get('/enrolled-courses' ,auth, getEnrolledCourses);
 
 module.exports=router;

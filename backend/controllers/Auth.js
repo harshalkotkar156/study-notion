@@ -4,7 +4,7 @@ const Otpgenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const Profile = require("../models/Profile");
 const jwt = require("jsonwebtoken");
-require('dotenv').config();
+// require('dotenv').config();
 exports.sentOtp = async (req, res) => {
 
     try {
@@ -23,7 +23,7 @@ exports.sentOtp = async (req, res) => {
             lowerCaseAlphabets: false,
             specialChars: false
         });
-        console.log("Otp generted: ", otp);
+        // console.log("Otp generted: ", otp);
         let result = await OTP.findOne({ otp: otp });
         while (result) {
             otp = Otpgenerator.generate(6, {
@@ -36,7 +36,6 @@ exports.sentOtp = async (req, res) => {
 
         const payload = { email, otp };
         const otpBody = await OTP.create(payload);
-        console.log(otpBody);
         return res.status(200).json({
             success: true,
             message: "Otp sent Successfully",
@@ -52,10 +51,6 @@ exports.sentOtp = async (req, res) => {
         });
     }
 
-
-
-
-
 }
 
 
@@ -64,17 +59,17 @@ exports.sentOtp = async (req, res) => {
 exports.signup = async (req, res) => {
 
     try {
-        const { firstname, lastname, email, password, confirmPassword, accountType, contactNumber, otp } = req.body;
+        const { firstName, lastName, email, password, confirmPassword, accountType, contactNumber, otp } = req.body;
 
-        if (!firstname || !lastname || !email || !password || !confirmPassword || !otp) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
 
             return res.status(403).json({
                 success: false,
                 message: "All fields are required"
             });
         }
-
-        if (!password !== confirmPassword) {
+        console.log(password , confirmPassword);
+        if (password !== confirmPassword) {
             return res.status(400).json({
                 success: false,
                 message: "Passwords NOT matching"
@@ -89,14 +84,14 @@ exports.signup = async (req, res) => {
                 message: "User is already registered",
             });
         }
-         
-        console.log("recent otp : ", recentOtp);
+        const recentOtp = await OTP.find({email}).sort({createdAt:-1}).limit(1);
+        
         if (recentOtp.length == 0) {
             return res.status(400).json({
                 success: false,
                 message: "Otp NOT found"
             });
-        } else if (otp !== recentOtp.otp) {
+        } else if (otp !== recentOtp[0].otp) {
             // wrong otp 
             return res.status(400).json({
                 success: false,
@@ -114,10 +109,10 @@ exports.signup = async (req, res) => {
         });
 
 
-        let avatar = firstname[0] + lastname[0];
+        let avatar = firstName[0] + lastName[0];
         const user = await User.create({
             firstName,
-            lastname,
+            lastName,
             email,
             contactNumber,
             password: hashedPassword,
@@ -137,7 +132,7 @@ exports.signup = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "User cannot be registerd , Try again"
+            error:error.message
         });
 
     }
@@ -158,21 +153,21 @@ exports.login = async(req,res) => {
             });
         }
 
-        const user = await User.find({email}).populate("additionalDetails");
-        
+        const user = await User.findOne({email}).populate("additionalDetails");
         if(!user){
             return res.status(401).json({
                 success:false,
                 message : "User not registered"
             });
         }
+        
         if(await bcrypt.compare(password,user.password)){
            const payload = {
                 email:user.email,
                 id:user._id,
                 accountType:user.accountType
             }
-
+            console.log("hello",process.env.JWT_SECRET);
             const token = jwt.sign(payload,process.env.JWT_SECRET,{
                 expiresIn:"2h"
             })
@@ -183,27 +178,29 @@ exports.login = async(req,res) => {
                 httpOnly: true
             }     
 
-            res.cookie("token",token,options).status(200).json({
+            return res.cookie("token",token,options).status(200).json({
                 success:true,
                 message:"User Login sucessfully",
                 user,
                 token
             })
 
+        }else{
+            return res.status(401).json({
+                success:false,
+                message : "Password is Incorrect"
+            });
         }
-        return res.status(401).json({
-            success:false,
-            message : "Password is Incorrect"
-        });
 
 
 
 
 
     } catch (error) {
-         return res.status(500).json({
+        return res.status(500).json({
             success: false,
-            message: "Login Failure , Try again"
+            message: "Login Failure , Try again",
+            error:error.message
         });   
     }
 }
