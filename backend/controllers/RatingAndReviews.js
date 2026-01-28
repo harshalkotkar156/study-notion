@@ -1,4 +1,4 @@
-const { Mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 const Course = require("../models/Course");
 const RatingandReviews = require("../models/RatingandReviews");
 
@@ -75,19 +75,24 @@ exports.averageRating = async(req,res) => {
     try {
         
         const courseId = req.body.courseId;
-        const result = await RatingandReviews.aggregate(
+
+        
+
+        const result = await RatingandReviews.aggregate([ 
             {
-                $match : {
-                    course : new Mongoose.Types.ObjectId(courseId)
+                $match: {
+                    course: new mongoose.Types.ObjectId(courseId)
                 }
             },
             {
-                $group : {
-                    _id :null,
-                    averageRating : {$avg :"$rating"},
+                $group: {
+                    _id: null,
+                    averageRating: { $avg: "$rating" }
                 }
             }
-        )
+        ]);
+
+        
 
         if(result.length > 0){
             return res.status(200).json({
@@ -108,9 +113,10 @@ exports.averageRating = async(req,res) => {
 
 
     } catch (error) {
-        return res.status().json({
+        return res.status(500).json({
             success:false,
-            message : "Error in calculating Average rating"
+            message : "Error in calculating Average rating",
+            error:error.message
         });
     }
 }
@@ -118,6 +124,7 @@ exports.averageRating = async(req,res) => {
 
 exports.getRatingAndReviewsAll = async(req,res) => {
     try {
+        
         
         const allReviewsandRating = await RatingandReviews.find({})
         .sort({rating:"desc"})

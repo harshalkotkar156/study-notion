@@ -85,11 +85,15 @@ exports.deleteSection =async(req,res) => {
     try {
         // id collected through the parameters
         
-        const {sectionId,courseId} = req.params;
+        const {sectionId,courseId} =req.body;
+        await Course.findByIdAndUpdate(courseId, 
+            {
+                $pull: { 
+                    courseContent: sectionId 
+                }
+            }
+        );
 
-        await Course.findByIdAndUpdate(courseId, {
-            $pull: { courseContent: sectionId }
-        });
 
 
         await Section.findByIdAndDelete(sectionId);

@@ -1,6 +1,7 @@
 const Profile = require("../models/Profile");
 const User= require("../models/User");
 const Course = require("../models/Course");
+const CourseProgress = require("../models/CourseProgress");
 
 exports.updateProfile = async(req,res) => {
     try {
@@ -154,7 +155,7 @@ try {
         })
         .exec();
     
-    console.log(userDetails);
+    // console.log(userDetails);
     
 
     userDetails = userDetails.toObject();

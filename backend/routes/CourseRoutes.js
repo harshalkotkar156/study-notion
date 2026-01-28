@@ -38,7 +38,7 @@ router.get('/instructors-courses',auth,isInstructor,getInstructorCourses);
 
 //Categories
 router.post('/create-category' , auth ,isAdmin,createCategory);
-router.post('/showall-categories' , showAllCategories);
+router.get('/showall-categories' , showAllCategories);
 router.post("/category-page-details",categoryPageDetails);
 
 

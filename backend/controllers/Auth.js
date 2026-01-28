@@ -68,7 +68,7 @@ exports.signup = async (req, res) => {
                 message: "All fields are required"
             });
         }
-        console.log(password , confirmPassword);
+       
         if (password !== confirmPassword) {
             return res.status(400).json({
                 success: false,
@@ -121,6 +121,7 @@ exports.signup = async (req, res) => {
             image: `https://api.dicebear.com/9.x/initials/svg?seed=${avatar}`
         });
 
+        user.password = undefined;
 
         return res.status(200).json({
             success: true,
@@ -167,7 +168,6 @@ exports.login = async(req,res) => {
                 id:user._id,
                 accountType:user.accountType
             }
-            console.log("hello",process.env.JWT_SECRET);
             const token = jwt.sign(payload,process.env.JWT_SECRET,{
                 expiresIn:"2h"
             })

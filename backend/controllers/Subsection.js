@@ -1,13 +1,13 @@
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
-const uploadImageCloudinary = require("../utils/imageUploder");
+const {uploadImageCloudinary} = require("../utils/imageUploder");
 
 exports.createSubSection = async(req,res) => {
     try {
         
         const {title,timeDuration,description,sectionId} = req.body;
 
-        const video = req.file.videoFile;
+        const video = req.files.videoFile;
 
 
         if(!title || !timeDuration || !description || !video || !sectionId){
@@ -44,7 +44,8 @@ exports.createSubSection = async(req,res) => {
     } catch (error) {
         return res.status(500).json({
             success:false,
-            message : "Error in creating subsection"
+            message : "Error in creating subsection",
+            error :error.message
         });
     }
 }
@@ -52,7 +53,7 @@ exports.createSubSection = async(req,res) => {
 
 exports.deleteSubSection = async (req,res) => {
     try {
-        const {subSectionId , sectionId} = req.params;
+        const {subSectionId , sectionId} = req.body;
 
         await Section.findByIdAndUpdate (sectionId , 
             {
@@ -87,7 +88,7 @@ exports.updateSubSection = async (req,res) => {
     try {
         
         const {subSectionId ,title="",timeDuration="",description=""} = req.body;
-        if(req.file.videoFile){
+        if(req.files){
             const video = req.file.videoFile;
             const videoUpload = await uploadImageCloudinary(video,process.env.CLOUDINARY_FOLDER_NAME);
             await SubSection.findByIdAndUpdate(subSectionId ,
@@ -118,7 +119,8 @@ exports.updateSubSection = async (req,res) => {
     } catch (error) {
         return res.status(500).json({
             success:false,
-            message : "Error in Updating the subsection"
+            message : "Error in Updating the subsection",
+            error:error.message
         });
     }
 

@@ -40,7 +40,7 @@ exports.showAllCategories = async(req,res) =>{
         // console.log("Hello");
         res.status(200).json({
             success:true,
-            message:"All tags returned sucessFully",
+            message:"All categories returned sucessFully",
             allTags
         });
     } catch (error) {
@@ -54,10 +54,10 @@ exports.showAllCategories = async(req,res) =>{
 
 exports.categoryPageDetails = async(req,res) => {
     try {
-        const {categoryId } = req.body;
+        const {categoryId} = req.body;
 
         const selectedCategory = await Category.findById(categoryId)
-            .populate("courses").exec();
+            .populate("course").exec();
 
         if(!selectedCategory){
             return res.status(404).json({
@@ -101,7 +101,7 @@ exports.categoryPageDetails = async(req,res) => {
     } catch (error) {
         return res.status(500).json({
             success:false,
-            message : "Error in getting data"
+            message :error.message
         });        
     }    
 }

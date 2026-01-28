@@ -2,16 +2,23 @@ const Course = require("../models/Course");
 const Category = require("../models/Category");
 const User = require("../models/User");
 const {uploadImageCloudinary} = require("../utils/imageUploder");
+const CourseProgress = require("../models/CourseProgress");
+const {convertSecondsToDuration} = require("../utils/durationCalculator");
+const Section = require("../models/Section");
+const SubSection = require("../models/SubSection");
+
 
 
 
 exports.createCourse = async(req,res) => {
     try{
 
-        const {courseName,whatYouWillLearn,courseDescription,price,tag} = req.body;
+      
+        const {courseName,whatYouWillLearn,courseDescription,price,category,tag} = req.body;
+
         const thumbnail = req.files.thumbnailImage;
 
-        if(!courseName || !courseDescription || !price || !tag || !thumbnail || !whatYouWillLearn){
+        if(!courseName || !courseDescription || !price || !category || !thumbnail || !whatYouWillLearn){
 
             return res.status(400).json({
                 success:false,
@@ -28,9 +35,9 @@ exports.createCourse = async(req,res) => {
             });
         }
 
-        const tagDetails = await Category.findById(tag);//here tag was passed as ID
+        const categoryDetails = await Category.findById(category);//here tag was passed as ID
 
-        if(!tagDetails){
+        if(!categoryDetails){
             return res.status(404).json({
                 success:false,
                 message : "Category details NOT Found"
@@ -44,8 +51,9 @@ exports.createCourse = async(req,res) => {
             instructor:instructorDetails._id,
             whatYouWillLearn,
             price,
-            tag:tagDetails._id,
-            thumbnail:thumbnailImage.secure_url
+            category:categoryDetails._id,
+            thumbnail:thumbnailImage.secure_url,
+            tag : tag
         });
 
         await User.findByIdAndUpdate(
@@ -57,9 +65,9 @@ exports.createCourse = async(req,res) => {
             },
             {new:true}
         )
-        //here updatethe tag schema as well - so we need to update the and add the course to this tag as well
+        
         await Category.findByIdAndUpdate(
-            {tag},
+            {_id: categoryDetails._id},
             {
                 $push: {
                     course:newCourse._id,
@@ -74,11 +82,6 @@ exports.createCourse = async(req,res) => {
             data : newCourse
         });
 
-
-
-
-
-        
     }catch(error) {
         return res.status(500).json({
             success:false,
@@ -167,6 +170,7 @@ exports.getCourseDetails = async (req,res) => {
                   
             });
         }
+        courseDetails.instructor.password =undefined;
 
         return res.status(200).json({
             success: true,
@@ -188,6 +192,7 @@ exports.getFullCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body
     const userId = req.user.id
+    
     const courseDetails = await Course.findOne({
       _id: courseId,
     })
@@ -207,12 +212,8 @@ exports.getFullCourseDetails = async (req, res) => {
       })
       .exec()
 
-    let courseProgressCount = await CourseProgress.findOne({
-      courseID: courseId,
-      userId: userId,
-    })
-
-    console.log("courseProgressCount : ", courseProgressCount)
+      courseDetails.instructor.password = undefined;
+    
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -221,21 +222,29 @@ exports.getFullCourseDetails = async (req, res) => {
       })
     }
 
-    // if (courseDetails.status === "Draft") {
-    //   return res.status(403).json({
-    //     success: false,
-    //     message: `Accessing a draft course is forbidden`,
-    //   });
-    // }
+    if (courseDetails.status === "Draft") {
+      return res.status(403).json({
+        success: false,
+        message: `Accessing a draft course is forbidden`,
+      });
+    }
 
-    let totalDurationInSeconds = 0
+
+    let courseProgressCount = await CourseProgress.findOne({
+      courseID: courseId,
+      userId: userId,
+    })
+
+    console.log("courseProgressCount : ", courseProgressCount)
+
+    let totalDurationInSeconds = 0;
     courseDetails.courseContent.forEach((content) => {
       content.subSection.forEach((subSection) => {
         const timeDurationInSeconds = parseInt(subSection.timeDuration)
         totalDurationInSeconds += timeDurationInSeconds
       })
     })
-
+    console.log(typeof(totalDurationInSeconds));
     const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
 
     return res.status(200).json({
@@ -261,6 +270,7 @@ exports.getFullCourseDetails = async (req, res) => {
 exports.deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.body
+    const userId = req.user.id;
 
     // Find the course
     const course = await Course.findById(courseId)
@@ -268,13 +278,29 @@ exports.deleteCourse = async (req, res) => {
       return res.status(404).json({ message: "Course not found" })
     }
 
-    // Unenroll students from the course
-    const studentsEnrolled = course.studentsEnroled
+
+    // remove that course from the instructor courses as well 
+    
+    const removeCourseFromInstructor=await User.findByIdAndUpdate(userId,
+      {
+        $pull : {
+          courses:courseId
+        }
+      },
+      {new:true}
+
+    );
+
+    const studentsEnrolled = course.studentEnrolled
     for (const studentId of studentsEnrolled) {
+      
       await User.findByIdAndUpdate(studentId, {
         $pull: { courses: courseId },
       })
     }
+
+    //delete the courseid from the instructor as well 
+
 
     // Delete sections and sub-sections
     const courseSections = course.courseContent
