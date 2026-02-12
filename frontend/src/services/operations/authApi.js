@@ -1,5 +1,5 @@
 import { toast } from "react-hot-toast"
-
+import { useDispatch, useSelector } from "react-redux"
 import { setLoading, setToken } from "../../slices/authSlice"
 import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
@@ -85,18 +85,16 @@ export function signUp(
 
 export function login(email, password, navigate) {
   return async (dispatch) => {
-    const toastId = toast.loading("Loading...");
-
+    const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-        
       const response = await apiConnector("POST", LOGIN_API, {
         email,
         password,
       })
 
       console.log("LOGIN API RESPONSE............", response)
-      
+
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
@@ -135,31 +133,42 @@ export function logout(navigate) {
 
 
 export function getPasswordResetToken(email , setEmailSent) {
+
   return async(dispatch) => {
     dispatch(setLoading(true));
+    
     try{
-      const response = await apiConnector("POST", RESETPASSTOKEN_API, {email,})
-
+      // const response = await apiConnector("POST", RESETPASSTOKEN_API, {email,})
+      const response = await toast.promise(
+  apiConnector("POST", RESETPASSTOKEN_API, { email }),
+  {
+    loading: "Sending reset email...",
+    success: "Reset Email Sent Successfully",
+    error: (err) =>
+      err?.response?.data?.message || "Something went wrong",
+  }
+);
       console.log("RESET PASSWORD TOKEN RESPONSE....", response);
 
       if(!response.data.success) {
         throw new Error(response.data.message);
       }
-
-      toast.success("Reset Email Sent");
       setEmailSent(true);
     }
     catch(error) {
       console.log("RESET PASSWORD TOKEN Error", error);
       toast.error("Failed to send email for resetting password");
+    }finally{
+      dispatch(setLoading(false));
     }
-    dispatch(setLoading(false));
+    
   }
 }
 
 export function resetPassword(password, confirmPassword, token) {
   return async(dispatch) => {
     dispatch(setLoading(true));
+    
     try{
       const response = await apiConnector("POST", RESETPASSWORD_API, {password, confirmPassword, token});
 
