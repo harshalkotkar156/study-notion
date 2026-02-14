@@ -25,7 +25,7 @@ export function sendOtp(email, navigate) {
       })
       console.log("SENDOTP API RESPONSE............", response)
 
-      console.log(response.data.success)
+      console.log("the message is : ",response.data.data.message);
 
       if (!response.data.success) {
         throw new Error(response.data.message)
@@ -34,13 +34,14 @@ export function sendOtp(email, navigate) {
       toast.success("OTP Sent Successfully")
       navigate("/verify-email")
     } catch (error) {
-      console.log("SENDOTP API ERROR............", error)
+      console.log("SENDOTP API ERROR............", error);
       toast.error("Could Not Send OTP")
     }
     dispatch(setLoading(false))
     toast.dismiss(toastId)
   }
 }
+
 
 export function signUp(
   accountType,
@@ -165,7 +166,7 @@ export function getPasswordResetToken(email , setEmailSent) {
   }
 }
 
-export function resetPassword(password, confirmPassword, token) {
+export function resetPassword(password, confirmPassword, token,navigate) {
   return async(dispatch) => {
     dispatch(setLoading(true));
     
@@ -178,8 +179,9 @@ export function resetPassword(password, confirmPassword, token) {
       if(!response.data.success) {
         throw new Error(response.data.message);
       }
-
       toast.success("Password has been reset successfully");
+      navigate("/login");
+
     }
     catch(error) {
       console.log("RESET PASSWORD TOKEN Error", error);
