@@ -16,11 +16,12 @@ export default function Instructor() {
       ;(async () => {
         setLoading(true)
         const instructorApiData = await getInstructorData(token)
+        console.log("Instructor Data : ",instructorApiData);
         const result = await fetchInstructorCourses(token)
-        console.log(instructorApiData)
+
         if (instructorApiData.length) setInstructorData(instructorApiData)
         if (result) {
-          setCourses(result)
+          setCourses(result);
         }
         setLoading(false)
       })()
@@ -69,7 +70,7 @@ export default function Instructor() {
                   <div>
                     <p className="text-lg text-richblack-200">Total Courses</p>
                     <p className="text-3xl font-semibold text-richblack-50">
-                      {courses.length}
+                      {courses.length }
                     </p>
                   </div>
                   <div>
@@ -109,7 +110,7 @@ export default function Instructor() {
                       </p>
                       <div className="mt-1 flex items-center space-x-2">
                         <p className="text-xs font-medium text-richblack-300">
-                          {course.studentsEnroled.length} students
+                          {course.studentEnrolled.length} students
                         </p>
                         <p className="text-xs font-medium text-richblack-300">
                           |

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {
   createSection,
   updateSection,
-} from "../../../../../services/operations/courseDetailsAPI"
+} from "../../../../../services/operations/courseDetailsApi"
 import {
   setCourse,
   setEditCourse,

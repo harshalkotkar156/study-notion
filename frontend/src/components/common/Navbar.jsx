@@ -10,7 +10,7 @@ import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { ACCOUNT_TYPE } from "../../utils/constants";
 import { apiConnector } from "../../services/apiconnector";
 import { categories } from "../../services/apis";
-import axios from "axios";
+
 
 
 const Navbar = () => {
@@ -80,7 +80,10 @@ const Navbar = () => {
 
                                <Link
                                 key={index}
-                                to={sublink?.link}
+                                to={`/catalog/${sublink.name
+                                    .split(" ")
+                                    .join("-")
+                                    .toLowerCase()}`}
                                 className="
                                   px-4 py-2
                                   rounded-md
@@ -88,7 +91,7 @@ const Navbar = () => {
                                   transition-all duration-200 ease-in-out
                                 "
                               >
-                                {sublink?.name}
+                                {sublink?.name }
                               </Link>
 
                               ))
@@ -126,8 +129,8 @@ const Navbar = () => {
             ))}
           </ul>
         </nav>
-
         <div className="hidden items-center gap-x-4 md:flex">
+
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to="/dashboard/cart" className="relative">
               <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
@@ -152,7 +155,10 @@ const Navbar = () => {
               </button>
             </Link>
           )}
-          {token !== null && <ProfileDropdown />}
+          {token && <ProfileDropdown />}
+
+
+
         </div>
         <button className="mr-4 md:hidden">
           <AiOutlineMenu fontSize={24} fill="#AFB2BF" />

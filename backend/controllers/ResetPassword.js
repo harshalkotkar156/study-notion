@@ -33,7 +33,7 @@ exports.resetPasswordToken = async (req, res) => {
         );
 
 
-        const url = `${process.env.FRONTEND_URL}/update-password/${token}`;
+        const url = `${process.env.FRONTEND_URL}update-password/${token}`;
 
         await mailSender(email, "Password Reset Link", `Password Reset Link : ${url}`);
 
@@ -58,9 +58,8 @@ exports.resetPassword = async (req, res) => {
 
     try {
 
-        const { token, password, confirmedPassword } = req.body;
-
-        if (password !== confirmedPassword) {
+        const { token, password, confirmPassword } = req.body;
+        if (password !== confirmPassword) {
             return res.json({
                 success: false,
                 message: "Password not matching"
@@ -68,7 +67,7 @@ exports.resetPassword = async (req, res) => {
         }
 
 
-        if (!token || !password || !confirmedPassword) {
+        if (!token || !password || !confirmPassword) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"

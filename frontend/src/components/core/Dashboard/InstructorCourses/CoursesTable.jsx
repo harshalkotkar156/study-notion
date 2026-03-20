@@ -14,7 +14,7 @@ import { formatDate } from "../../../../services/formatDate"
 import {
   deleteCourse,
   fetchInstructorCourses,
-} from "../../../../services/operations/courseDetailsAPI"
+} from "../../../../services/operations/courseDetailsApi"
 import { COURSE_STATUS } from "../../../../utils/constants"
 import ConfirmationModal from "../../../common/ConfirmationModel"
 
@@ -38,7 +38,7 @@ export default function CoursesTable({ courses, setCourses }) {
     setLoading(false)
   }
 
-  // console.log("All Course ", courses)
+  
 
   return (
     <>

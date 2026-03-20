@@ -11,7 +11,7 @@ exports.auth = async(req,res,next) => {
             req.body?.token ||
             req.header("Authorization")?.replace("Bearer ", "");
 
-
+        // console.log("this is token : ",token);
         if(!token) {
             return res.status(401).json({
                 success:false,
@@ -24,6 +24,8 @@ exports.auth = async(req,res,next) => {
             req.user = decode;
 
         } catch (error) {
+            // console.log("here is error token is expired");
+            // console.log("errror : ",error);
             return res.status(401).json({
                 success:false,
                 message : "Invalid token",

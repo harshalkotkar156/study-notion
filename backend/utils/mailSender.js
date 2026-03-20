@@ -54,7 +54,7 @@ const mailSenderAPI = async (email, title, body) => {
             return console.error({ error });
         }
 
-        console.log({ data });
+        // console.log({ data });
     } catch (error) {
         console.log("Error is : ",error);
     }

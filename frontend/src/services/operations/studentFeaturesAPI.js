@@ -29,6 +29,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
     try{
         //load the script
         const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    
 
         if(!res) {
             toast.error("RazorPay SDK failed to load");
@@ -36,6 +37,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
         }
 
         //initiate the order
+        // console.log("This are course : ",courses);
         const orderResponse = await apiConnector("POST", COURSE_PAYMENT_API, 
                                 {courses},
                                 {
@@ -48,7 +50,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
         console.log("PRINTING orderResponse", orderResponse);
         //options
         const options = {
-            key: process.env.RAZORPAY_KEY,
+            key: import.meta.env.VITE_RAZORPAY_KEY,
             currency: orderResponse.data.message.currency,
             amount: `${orderResponse.data.message.amount}`,
             order_id:orderResponse.data.message.id,
@@ -76,7 +78,8 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
 
     }
     catch(error) {
-        console.log("PAYMENT API ERROR.....", error);
+        console.log("PAYMENT API ERROR.....", error.message);
+        console.log("Error : ",error);
         toast.error("Could not make Payment");
     }
     toast.dismiss(toastId);

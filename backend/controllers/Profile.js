@@ -47,7 +47,8 @@ exports.updateProfile = async(req,res) => {
 
 exports.deleteAccount = async(req,res) => {
     try {
-        const {id} = req.body;
+        
+        const {id} = req.user;
         if(!id){
             return res.status(400).json({
                 success:false,
@@ -62,6 +63,7 @@ exports.deleteAccount = async(req,res) => {
                 message : "User not found"
             });
         }
+
         const profileId = user.additionalDetails;
         await Profile.findByIdAndDelete(profileId);
 
@@ -73,9 +75,13 @@ exports.deleteAccount = async(req,res) => {
         });
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             success:false,
-            message : "Error in deleting the profile, try again!"
+            message : "Error in deleting the profile, try again!",
+            error : error
+
+
         });
 
     }
@@ -113,9 +119,9 @@ exports.instructorDashboard = async (req, res) => {
     try {
   
       const courseDetails = await Course.find({ instructor: req.user.id })
-  
+    // console.log("THis is course details : ",courseDetails);
       const courseData = courseDetails.map((course) => {
-        const totalStudentsEnrolled = course.studentsEnroled.length;
+        const totalStudentsEnrolled = course.studentEnrolled.length;
         const totalAmountGenerated = totalStudentsEnrolled * course.price;
   
         // Create a new object with the additional fields
@@ -131,7 +137,7 @@ exports.instructorDashboard = async (req, res) => {
         return courseDataWithStats
       })
   
-      res.status(200).json({ courses: courseData })
+      res.status(200).json({ data: courseData })
     } catch (error) {
       console.error(error)
       res.status(500).json({ message: "Server Error" })
@@ -208,4 +214,37 @@ try {
     message: error.message,
     })
 }
+}
+
+
+
+
+
+exports.updateDisplayPicture = async (req, res) => {
+  try {
+    const displayPicture = req.files.displayPicture
+    const userId = req.user.id
+    const image = await uploadImageToCloudinary(
+      displayPicture,
+      process.env.FOLDER_NAME,
+      1000,
+      1000
+    )
+    console.log(image)
+    const updatedProfile = await User.findByIdAndUpdate(
+      { _id: userId },
+      { image: image.secure_url },
+      { new: true }
+    )
+    res.send({
+      success: true,
+      message: `Image Updated successfully`,
+      data: updatedProfile,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
 }

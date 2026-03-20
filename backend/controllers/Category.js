@@ -38,10 +38,10 @@ exports.showAllCategories = async(req,res) =>{
         
         const allTags = await Category.find({} , {name:true,description:true});
         // console.log("Hello");
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"All categories returned sucessFully",
-            allTags
+            data:allTags
         });
     } catch (error) {
         console.log(error);
@@ -65,11 +65,11 @@ exports.categoryPageDetails = async(req,res) => {
                 message : "Data not find"
             });
         }
-
         const diffrentCategories = await Category.find({
             _id : {$ne : categoryId},
-        }).populate("courses").exec();
+        }).populate("course").exec();
          
+
     
         const topSellingCourses = await Course.aggregate([
             {
@@ -87,7 +87,7 @@ exports.categoryPageDetails = async(req,res) => {
 
         return res.status(200).json({
             success:true,
-            message : "Date fetched successfully",
+            message : "Data fetched successfully",
             data: {
                 diffrentCategories,
                 selectedCategory,

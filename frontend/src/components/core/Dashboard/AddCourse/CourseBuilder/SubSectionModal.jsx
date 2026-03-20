@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {
   createSubSection,
   updateSubSection,
-} from "../../../../../services/operations/courseDetailsAPI"
+} from "../../../../../services/operations/courseDetailsApi"
 import { setCourse } from "../../../../../slices/courseSlice"
 import IconBtn from "../../../../common/IconBtn"
 import Upload from "../Upload"
@@ -161,7 +161,21 @@ export default function SubSectionModal({
               id="lectureTitle"
               placeholder="Enter Lecture Title"
               {...register("lectureTitle", { required: true })}
-              className="form-style w-full"
+              // className="form-style w-full"
+              className="
+                        w-full
+                        px-4 py-3
+                        rounded-lg
+                        bg-gray-900
+                        text-white
+                        placeholder-gray-400
+                        border border-gray-700
+                        focus:outline-none
+                        focus:ring-2 focus:ring-blue-500
+                        focus:border-blue-500
+                        transition-all duration-200
+                    "
+              
             />
             {errors.lectureTitle && (
               <span className="ml-2 text-xs tracking-wide text-pink-200">
@@ -182,8 +196,6 @@ export default function SubSectionModal({
               {...register("lectureDesc", { required: true })}
               // className="form-style resize-x-none min-h-[130px] w-full"
               className="
-                        min-h-[130px]
-                        resize-x-none
                         w-full
                         px-4 py-3
                         rounded-lg
@@ -196,6 +208,8 @@ export default function SubSectionModal({
                         focus:border-blue-500
                         transition-all duration-200
                     "
+              
+              
             />
             {errors.lectureDesc && (
               <span className="ml-2 text-xs tracking-wide text-pink-200">
