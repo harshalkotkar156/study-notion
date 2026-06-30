@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa"
-import HighlightText from "../components/core/HomePage/HighlightText";
+import HightLightText from "../components/core/HomePage/HighLightText"
 import CTAButton from "../components/core/HomePage/Button"
 import Banner from "../assets/Images/banner.mp4"
 import CodeBlocks from '../components/core/HomePage/CodeBlocks';
@@ -11,7 +11,7 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import TimelineSection from "../components/core/HomePage/TimelineSection";
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 // import ReviewSlider from '../components/core/homepage/ReviewSlider';
-import Footer from '../components/common/Footer';
+import Footer from '../components/Common/Footer';
 
 const Home = () => {
   return (
@@ -30,7 +30,7 @@ const Home = () => {
 
                 <div className='text-center text-4xl font-semibold'>
                     Empower Your Future with
-                    <HighlightText text={"Coding Skills"} />
+                    <HightLightText text={"Coding Skills"} />
                 </div>
 
                 <div className="-mt-3 w-[90%] text-center text-lg font-bold text-richblack-300">
@@ -72,7 +72,7 @@ const Home = () => {
                     heading={
                     <div className="text-4xl font-semibold">
                         Unlock your
-                        <HighlightText text={"coding potential"} /> with our online
+                        <HightLightText text={"coding potential"} /> with our online
                         courses.
                     </div>
                     }
@@ -104,7 +104,7 @@ const Home = () => {
                     heading={
                     <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
                         Start
-                        <HighlightText text={"coding in seconds"} />
+                        <HightLightText text={"coding in seconds"} />
                     </div>
                     }
                     subheading={
@@ -161,7 +161,7 @@ const Home = () => {
                   <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
                       <div className="text-4xl font-semibold lg:w-[45%] ">
                           Get the skills you need for a{" "}
-                          <HighlightText text={"job that is in demand."} />
+                          <HightLightText text={"job that is in demand."} />
                       </div>
                       <div className="flex flex-col items-start gap-10 lg:w-[40%]">
                           <div className="text-[16px]">

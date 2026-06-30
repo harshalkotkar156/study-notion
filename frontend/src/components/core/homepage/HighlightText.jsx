@@ -9,4 +9,4 @@ const HighLightText = ({text}) => {
   )
 }
 
-export default HighLightText 
+export default HighLightText

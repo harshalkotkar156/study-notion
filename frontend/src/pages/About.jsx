@@ -8,10 +8,10 @@ import BannerImage3 from "../assets/Images/aboutus3.webp"
 import ContactFormSection from "../components/core/AboutPage/ContactFormSection"
 import LearningGrid from "../components/core/AboutPage/LearningGrid"
 import Quote from "../components/core/AboutPage/Quote"
-import StatsComponenet from "../components/core/AboutPage/Stats"
-import HighLightText from "../components/core/HomePage/HighlightText"
-import ReviewSlider from "../components/common/ReviewSlider"
-import Footer from "../components/common/Footer"
+import StatsComponent from "../components/core/AboutPage/StatsComponent"
+import HighLightText from "../components/core/HomePage/HighLightText";
+import ReviewSlider from "../components/Common/ReviewSlider"
+import Footer from "../components/Common/Footer"
 
 const About = () => {
   return (

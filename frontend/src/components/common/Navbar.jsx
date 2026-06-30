@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useSelector } from "react-redux"
-import { NavbarLinks } from '../../data/navbar-links'
+import { NavbarLinks } from '../../data/navbar-links';
 import ProfileDropdown from '../core/auth/ProfileDropDown';
 import logo from "../../assets/Logo/Logo-Full-Light.png"
 import { Link, matchPath, useLocation } from "react-router-dom"
