@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
-// import ConfirmationModal from "../components/common/ConfirmationModal"
+
 import ConfirmationModal from "../components/Common/ConfirmationModel"
 import Footer from "../components/Common/Footer"
 import RatingStars from "../components/Common/RatingStars"
