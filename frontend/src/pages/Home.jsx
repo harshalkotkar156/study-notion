@@ -11,7 +11,8 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import TimelineSection from "../components/core/HomePage/TimelineSection";
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 // import ReviewSlider from '../components/core/homepage/ReviewSlider';
-import Footer from '../components/Common/Footer';
+
+import Footer from "../components/Common/Footer";
 
 const Home = () => {
   return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes } from "react-router-dom";
 import Home from './pages/Home';
-import Navbar from './components/common/Navbar';
+import Navbar from './components/Common/Navbar';
 import Error from "./pages/Error";
 import OpenRoute from "./components/core/auth/OpenRoute";
 import Login from "./pages/Login";
@@ -27,7 +27,8 @@ import EditCourse from "./components/core/Dashboard/EditCourse";
 import Catalog from './pages/Catalog';
 import CourseDetails from './pages/CourseDetails';
 import ViewCourse from "./pages/ViewCourse";
-import VideoDetails from "./components/core/ViewCourse/VideoDetails"
+
+import VideoDetails from './components/core/ViewCourse/VideoDetails';
 import './App.css'
 
 function App() {
