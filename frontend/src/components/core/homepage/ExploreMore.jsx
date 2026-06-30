@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // import { HomePageExplore } from "../../../data/homepage-explore";
 import {HomePageExplore} from "../../../data/homepage-explore";
 import CourseCard from "./CourseCard";
-import HighlightText from "./HighlightText";
+import HighLightText from "./HighLightText";
 
 const tabsName = [
   "Free",
@@ -32,7 +32,7 @@ const ExploreMore = () => {
       <div>
         <div className="text-4xl font-semibold text-center my-10">
           Unlock the
-          <HighlightText text={"Power of Code"} />
+          <HighLightText text={"Power of Code"} />
           <p className="text-center text-richblack-300 text-lg font-semibold mt-1">
             Learn to Build Anything You Can Imagine
           </p>
