@@ -2,14 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa"
-import HighlightText from "../components/core/homepage/HighlightText";
+import HighlightText from "../components/core/HomePage/HighlightText";
 import CTAButton from "../components/core/HomePage/Button"
 import Banner from "../assets/Images/banner.mp4"
-import CodeBlocks from '../components/core/homepage/CodeBlocks';
-import ExploreMore from '../components/core/homepage/ExploreMore';
-import LearningLanguageSection from '../components/core/homepage/LearningLanguageSection';
-import TimelineSection from "../components/core/homepage/TimelineSection";
-import InstructorSection from '../components/core/homepage/InstructorSection';
+import CodeBlocks from '../components/core/HomePage/CodeBlocks';
+import ExploreMore from '../components/core/HomePage/ExploreMore';
+import LearningLanguageSection from '../components/core/HomePage/LearningLanguageSection';
+import TimelineSection from "../components/core/HomePage/TimelineSection";
+import InstructorSection from '../components/core/HomePage/InstructorSection';
 // import ReviewSlider from '../components/core/homepage/ReviewSlider';
 import Footer from '../components/common/Footer';
 
