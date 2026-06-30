@@ -69,7 +69,7 @@ exports.updateSection = async (req, res) => {
 			data:course,
 		});
 	} catch (error) {
-		console.error("Error updating section:", error);
+		// console.error("Error updating section:", error);
 		res.status(500).json({
 			success: false,
 			message: "Internal server error",

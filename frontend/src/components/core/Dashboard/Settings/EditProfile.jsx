@@ -21,11 +21,11 @@ export default function EditProfile() {
   } = useForm()
 
   const submitProfileForm = async (data) => {
-    // console.log("Form Data - ", data)
+    
     try {
       dispatch(updateProfile(token, data))
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+      // console.log("ERROR MESSAGE - ", error.message)
     }
   }
   return (
@@ -38,7 +38,7 @@ export default function EditProfile() {
           </h2>
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="firstName" className="lable-style">
+              <label htmlFor="firstName" className="lable-style text-amber-50">
                 First Name
               </label>
               <input
@@ -70,7 +70,7 @@ export default function EditProfile() {
               )}
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="lastName" className="lable-style">
+              <label htmlFor="lastName" className="lable-style text-amber-50">
                 Last Name
               </label>
               <input
@@ -105,7 +105,7 @@ export default function EditProfile() {
 
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="dateOfBirth" className="lable-style">
+              <label htmlFor="dateOfBirth" className="lable-style text-amber-50">
                 Date of Birth
               </label>
               <input
@@ -145,7 +145,7 @@ export default function EditProfile() {
               )}
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="gender" className="lable-style">
+              <label htmlFor="gender" className="lable-style text-amber-50">
                 Gender
               </label>
               <select
@@ -186,7 +186,7 @@ export default function EditProfile() {
 
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="contactNumber" className="lable-style">
+              <label htmlFor="contactNumber" className="lable-style text-amber-50">
                 Contact Number
               </label>
               <input
@@ -225,7 +225,7 @@ export default function EditProfile() {
               )}
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="about" className="lable-style">
+              <label htmlFor="about" className="lable-style text-amber-50">
                 About
               </label>
               <input

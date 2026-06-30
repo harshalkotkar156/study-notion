@@ -29,7 +29,7 @@ const ContactUsForm = () => {
       setLoading(false)
       toast.success("Mail send Successfully!");
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+      // console.log("ERROR MESSAGE - ", error.message)
       setLoading(false)
       toast.error("Error in message sending");
     }

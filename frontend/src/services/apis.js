@@ -1,5 +1,5 @@
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
-const BASE_URL ="http://localhost:3000/api/v1";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+// const BASE_URL ="http://localhost:3000/api/v1";
 
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/sent-otp",
@@ -66,6 +66,6 @@ export const contactusEndpoint = {
 export const settingsEndpoints = {
   UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/update-display-picture",
   UPDATE_PROFILE_API: BASE_URL + "/profile/update-profile",
-  CHANGE_PASSWORD_API: BASE_URL + "/auth/changepassword",
+  CHANGE_PASSWORD_API: BASE_URL + "/auth/change-password",
   DELETE_PROFILE_API: BASE_URL + "/profile/delete-profile",
 }

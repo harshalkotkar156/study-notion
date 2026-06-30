@@ -7,6 +7,7 @@ import IconBtn from "../../common/IconBtn"
 
 export default function MyProfile() {
   const { user } = useSelector((state) => state.profile)
+  
   const navigate = useNavigate()
 
   return (

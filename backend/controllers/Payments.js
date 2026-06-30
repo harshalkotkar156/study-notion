@@ -1,15 +1,15 @@
-const { Mongoose } = require("mongoose");
-const {instance} = require("../config/razorpay");
+const instance = require("../config/razorpay");
+
 const Course = require("../models/Course");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
-
-
+const Mongoose = require("mongoose")
+// const mongoose = require("mongoose")
 exports.capturePayment = async(req,res) => {
 
     const {courses} = req.body;
-    console.log("THis are courses in backend :",courses);
     const userId = req.user.id;
+    // console.log("thissi teh userid : ",userId);
     if(courses.length === 0) {
         return res.json({
             success:false,
@@ -27,6 +27,8 @@ exports.capturePayment = async(req,res) => {
                     message : "No course found"
                 });
             }
+            // console.log("Here are course. :",course);
+
             const uid = new Mongoose.Types.ObjectId(userId);
             if(course.studentEnrolled.includes(uid)){
                 return res.status(200).json({
@@ -61,7 +63,7 @@ exports.capturePayment = async(req,res) => {
             message : paymentResponse
         });
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).json({
             success:false,
             message : "Could not initiate order"
@@ -85,15 +87,18 @@ exports.verifyPayment = async(req,res) => {
         });
 
     }
+    
     let body = razorpay_order_id + "|" + razorpay_payment_id;
-    const expectedSignature = crypto.createHmac("sha256".   process.env.RAZORPAY_KEY_SECRET).update(body.toString()).digest('hex');
+    const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .update(body.toString())
+        .digest("hex");
 
-    if(expectedSignature === actual_signature){
-
-        await enrolledStudents(courses,userId,res);
+    if (expectedSignature === razorpay_signature) {
+        await enrolledStudents(courses, userId, res);
         return res.status(200).json({
-            success:true,
-            message : "Payment Verified"
+            success: true,
+            message: "Payment Verified",
         });
     }
     return res.status(200).json({
@@ -144,7 +149,7 @@ const enrolledStudents = async(courses,userId,res) => {
             
         } catch (error) {
             
-            console.log("error ",error);
+            // console.log("error ",error);
             return res.status(500).json({
                 success:false,
                 message : error.message

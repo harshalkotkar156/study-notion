@@ -5,8 +5,10 @@ const CourseProgress = require("../models/CourseProgress");
 
 exports.updateProfile = async(req,res) => {
     try {
-        const {gender , dateOfBirth="" , about="",contactNumber} = req.body;
+        // console.log("====REquest body : ",req.body);
+        const {firstName , lastName ,gender , dateOfBirth="" , about="",contactNumber} = req.body;
         const userId = req.user.id;
+
         if(!contactNumber || !userId || !gender){
             return res.status(400).json({
                 success:false,
@@ -15,18 +17,26 @@ exports.updateProfile = async(req,res) => {
         }
 
         const userDetails = await User.findById(userId);
-        const profileId = userDetails.additionalDetails;
+        userDetails.firstName = firstName;
+        userDetails.lastName = lastName;
+        await userDetails.save();
 
-        const updatedProfile = await Profile.findByIdAndUpdate(profileId,
+        const profileId = userDetails.additionalDetails;
+    
+        
+        
+        const updatedProfileLatest = await Profile.findByIdAndUpdate(profileId,
             {
                 gender : gender,
                 contactNumber:contactNumber,
                 about:about,
                 dateOfBirth : dateOfBirth,
             },
-            {new:true}
         );
-
+        
+        
+        const updatedProfile = await User.findById(userId).populate("additionalDetails").select("-password");
+        // console.log("htis is updated prfile profile now. : ",updatedProfile);
         return res.status(200).json({
             success:true,
             message : "Profile Updated successfully",

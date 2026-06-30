@@ -17,15 +17,17 @@ export default function UpdatePassword() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm()
 
   const submitPasswordForm = async (data) => {
     // console.log("password Data - ", data)
     try {
-      await changePassword(token, data)
+      await changePassword(token, data);
+      reset();      
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+      console.log("ERROR MESSAGE - ", error.message);
     }
   }
 
@@ -36,7 +38,7 @@ export default function UpdatePassword() {
           <h2 className="text-lg font-semibold text-richblack-5">Password</h2>
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="relative flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="oldPassword" className="lable-style">
+              <label htmlFor="oldPassword" className="lable-style text-amber-50">
                 Current Password
               </label>
               <input
@@ -77,7 +79,7 @@ export default function UpdatePassword() {
               )}
             </div>
             <div className="relative flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="newPassword" className="lable-style">
+              <label htmlFor="newPassword" className="lable-style text-amber-50">
                 New Password
               </label>
               <input

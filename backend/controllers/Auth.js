@@ -175,7 +175,7 @@ exports.login = async(req,res) => {
             user.token= token;
             user.password=undefined;
             const options = {
-                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
                 httpOnly: true
             }     
 
@@ -210,22 +210,15 @@ exports.login = async(req,res) => {
 
 exports.changePassword = async(req,res) => {
    try {
-         const {email,oldPassword , newPassword,confirmNewPassword} = req.body;
-    if(!email || !oldPassword || !newPassword || !confirmNewPassword){
+        const {oldPassword , newPassword} = req.body;
+        const email = req.user.email;
+    if(!oldPassword || !newPassword){
         return res.status(403).json({
             success:false,
             message : "All fields are required"
         });
     }
-
-
-    if(newPassword !== confirmNewPassword) {
-        return res.status(403).json({
-            success:false,
-            message : "Password not matching"
-        });
-    }
-
+    
     const user = await User.findOne({email});
     if(!user){
         return res.status(401).json({
@@ -234,21 +227,28 @@ exports.changePassword = async(req,res) => {
         });
     }
 
-    const newPasswordHash = await bcrypt.hash(newPassword,10);
-    const updatePassword = await User.updateOne({email:email,
-        password : newPasswordHash
-    })
-
-    if(!updatePassword){
-        return res.status(401).json({
+    if(await bcrypt.compare(oldPassword,user.password)){
+        const newPasswordHash = await bcrypt.hash(newPassword,10);
+        const updatePassword = await User.updateOne({email:email,
+            password : newPasswordHash
+        })
+    
+        if(!updatePassword){
+            return res.status(401).json({
+                success:false,
+                message : "Password Not Update"
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            message : "Password changed Successfully"
+        });
+    }else{
+        res.status(401).json({
             success:false,
-            message : "Password Not Update"
+            message : "Current password is incorrect"
         });
     }
-    return res.status(200).json({
-        success:true,
-        message : "Password changed Successfully"
-    });
     
 
    } catch (error) {
