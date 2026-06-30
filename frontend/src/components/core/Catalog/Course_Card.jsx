@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import RatingStars from '../../common/RatingStars.jsx'
+import RatingStars from '../../Common/RatingStars.jsx'
 import GetAvgRating from '../../../utils/avgRating';
 import { Link } from 'react-router-dom';
 

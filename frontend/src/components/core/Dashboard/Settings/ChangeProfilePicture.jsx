@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 
 import { updateDisplayPicture } from "../../../../services/operations/SettingAPI"
-import IconBtn from "../../../common/IconBtn"
+import IconBtn from "../../../Common/IconBtn"
 
 export default function ChangeProfilePicture() {
   const { token } = useSelector((state) => state.auth)

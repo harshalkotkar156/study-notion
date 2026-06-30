@@ -16,7 +16,7 @@ import {
   fetchInstructorCourses,
 } from "../../../../services/operations/courseDetailsAPI"
 import { COURSE_STATUS } from "../../../../utils/constants"
-import ConfirmationModal from "../../../common/ConfirmationModel"
+import ConfirmationModal from "../../../Common/ConfirmationModel"
 
 
 export default function CoursesTable({ courses, setCourses }) {
