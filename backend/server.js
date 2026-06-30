@@ -25,13 +25,14 @@ database.connect();
 app.use(cookieParser());
 app.use(express.json());
 app.use(
-    cors({
-        // origin:process.env.FRONTEND_URL,
-        origin:"http://localhost:5173",
-        credentials:true
-    })
+  cors({
+    origin: [
+      "http://localhost:5173",
+      process.env.VERCEL_FRONTEND_URL,
+    ],
+    credentials: true,
+  })
 )
-
 app.use(
     fileUpload({
         useTempFiles:true,
