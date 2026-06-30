@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import { sidebarLinks } from "../../../data/dashboard-links"
-import { logout } from "../../../services/operations/authApi"
+import { logout } from "../../../services/operations/authAPI"
 import ConfirmationModal from "../../common/ConfirmationModel"
 import SidebarLink from "./SidebarLink"
 

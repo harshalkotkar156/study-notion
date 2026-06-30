@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
 import { settingsEndpoints } from "../apis"
-import { logout } from "./authApi"
+import { logout } from "./authAPI"
 
 const {
   UPDATE_DISPLAY_PICTURE_API,

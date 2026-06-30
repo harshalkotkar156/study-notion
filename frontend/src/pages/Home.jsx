@@ -30,7 +30,7 @@ const Home = () => {
 
                 <div className='text-center text-4xl font-semibold'>
                     Empower Your Future with
-                    <HightLightText text={"Coding Skills"} />
+                    <HighLightText text={"Coding Skills"} />
                 </div>
 
                 <div className="-mt-3 w-[90%] text-center text-lg font-bold text-richblack-300">
@@ -72,7 +72,7 @@ const Home = () => {
                     heading={
                     <div className="text-4xl font-semibold">
                         Unlock your
-                        <HightLightText text={"coding potential"} /> with our online
+                        <HighLightText text={"coding potential"} /> with our online
                         courses.
                     </div>
                     }
@@ -104,7 +104,7 @@ const Home = () => {
                     heading={
                     <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
                         Start
-                        <HightLightText text={"coding in seconds"} />
+                        <HighLightText text={"coding in seconds"} />
                     </div>
                     }
                     subheading={
@@ -161,7 +161,7 @@ const Home = () => {
                   <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
                       <div className="text-4xl font-semibold lg:w-[45%] ">
                           Get the skills you need for a{" "}
-                          <HightLightText text={"job that is in demand."} />
+                          <HighLightText text={"job that is in demand."} />
                       </div>
                       <div className="flex flex-col items-start gap-10 lg:w-[40%]">
                           <div className="text-[16px]">
