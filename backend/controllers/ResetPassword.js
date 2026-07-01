@@ -33,7 +33,7 @@ exports.resetPasswordToken = async (req, res) => {
         );
 
 
-        const url = `${process.env.FRONTEND_URL}update-password/${token}`;
+        const url = `${process.env.VERCEL_FRONTEND_URL}update-password/${token}`;
 
         await mailSender(email, "Password Reset Link", `Password Reset Link : ${url}`);
 
